@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSaleRequest;
 use App\Models\Sale;
 use App\Services\CommissionCalculator;
-use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
+    public function index(Request $request)
+    {
+        return Sale::all();
+    }
   
     public function store(StoreSaleRequest $request)
     {
@@ -33,9 +36,10 @@ class SaleController extends Controller
      * Display the specified resource.
      */
     public function show($SalerId)
-    {
+    {        
         $sales = Sale::where('saler_id', $SalerId)->get();
         return response()->json($sales);
+        
     }
 
     public function destroy($id)
