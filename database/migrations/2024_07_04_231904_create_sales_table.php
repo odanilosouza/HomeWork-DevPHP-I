@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sellers_id');
             $table->decimal('value_sale', 10, 2);
             $table->decimal('commission', 10, 2);
-            $table->date('data_sale');
+            $table->date('data_sale')->default(now());
             $table->timestamps();
 
             $table->foreign('sellers_id')->references('id')->on('sellers');

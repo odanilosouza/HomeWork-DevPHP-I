@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sale extends Model
+class Sale extends Model
 {
-    protected $fillable = ['sellers_id', 'value_sale', 'commission', 'data_sale'];
+    protected $fillable = ['sellers_id', 'value_sale'];
 
     public function seller() 
     {
