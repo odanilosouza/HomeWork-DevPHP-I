@@ -4,48 +4,50 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSaleRequest;
-use App\Models\Sale;
+use App\Repositories\SaleRepository;
 use App\Services\CommissionCalculator;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
+    protected $saleRepository;
+
+    public function __construct(SaleRepository $saleRepository) {
+        $this->saleRepository = $saleRepository;
+    }
+
     public function index(Request $request)
     {
-        return Sale::all();
+        $sales = $this->saleRepository->all();
+        return response()->json($sales);
     }
-  
+
     public function store(StoreSaleRequest $request)
     {
-    $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
-    $commission = CommissionCalculator::calculate($validatedData['value_sale']);
+        $commission = CommissionCalculator::calculate($validatedData['value_sale']);
 
-    $sale = new Sale();
-    $sale->sellers_id = $validatedData['sellers_id'];
-    $sale->value_sale = $validatedData['value_sale'];
-    $sale->commission = $commission;
+        $saleData = [
+            'seller_id' => $validatedData['sellers_id'],
+            'value_sale' => $validatedData['value_sale'],
+            'commission' => $commission,
+        ];
 
-    $sale->save();
+        $sale = $this->saleRepository->create($saleData);
 
-    return response()->json($sale, 201);
-   
+        return response()->json($sale, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($SalerId)
+    public function show($sellerId)
     {        
-        $sales = Sale::where('saler_id', $SalerId)->get();
+        $sales = $this->saleRepository->findBySellerId($sellerId);
         return response()->json($sales);
-        
     }
 
     public function destroy($id)
     {
-        Sale::find($id)->delete();
+        $this->saleRepository->delete($id);
         return response()->json(null, 204);
-
     }
 }
