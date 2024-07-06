@@ -9,8 +9,8 @@ class StoreSaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'seller_id' =>'required|exists:sellers,id',
-            'value' => 'required|numeric',
+            'sellers_id' =>'required|exists:sellers,id',
+            'value_sale' => 'required|numeric',
             ];
     }
 }
