@@ -37,4 +37,11 @@ class SaleController extends Controller
         $sales = Sale::where('saler_id', $SalerId)->get();
         return response()->json($sales);
     }
+
+    public function destroy($id)
+    {
+        Sale::find($id)->delete();
+        return response()->json(null, 204);
+
+    }
 }
