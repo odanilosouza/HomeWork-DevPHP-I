@@ -9,7 +9,9 @@ O projeto "Cadastro de Vendas e Comissões" é um sistema desenvolvido utilizand
 DAntes de começar, certifique-se de ter os seguintes requisitos instalados em sua máquina:
 
 PHP
+
 Composer
+
 Docker
 ```
 
